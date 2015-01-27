@@ -1,0 +1,46 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module _supsmu ! in 
+    interface  ! in :supsmu
+        subroutine supsmu(n,x,y,w,iper,span,alpha,smo,sc) ! in :supsmu:supsmu.f
+            integer, optional,check(len(x)>=n),depend(x) :: n=len(x)
+            real, dimension(n),intent(in) :: x
+            real, dimension(n),intent(in),depend(n) :: y
+            real, dimension(n),intent(in),depend(n) :: w
+            integer, intent(in) :: iper
+            real, intent(in) :: span
+            real, intent(in) :: alpha
+            real, dimension(n),intent(out),depend(n) :: smo
+            real, dimension(n,7),intent(inout),depend(n) :: sc
+            real :: big
+            real :: sml
+            real :: eps
+            real dimension(3) :: spans
+            common /consts/ big,sml,eps
+            common /spans/ spans
+        end subroutine supsmu
+        subroutine smooth(n,x,y,w,span,iper,vsmlsq,smo,acvr) ! in :supsmu:supsmu.f
+            integer, optional,check(len(x)>=n),depend(x) :: n=len(x)
+            real intent(in),dimension(n) :: x
+            real intent(in),dimension(n),depend(n) :: y
+            real intent(in),dimension(n),depend(n) :: w
+            real intent(in) :: span
+            integer intent(in) :: iper
+            real intent(in) :: vsmlsq
+            real intent(out),dimension(n),depend(n) :: smo
+            real intent(out),dimension(n),depend(n) :: acvr
+        end subroutine smooth
+        block data  ! in :supsmu:supsmu.f
+            real, optional :: big=0.2
+            real, optional :: sml=0.5
+            real, optional :: eps=1e+20
+            real, optional,dimension(3) :: spans=0.05
+            common /consts/ big,sml,eps
+            common /spans/ spans
+        end block data 
+    end interface 
+end python module supsmu
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

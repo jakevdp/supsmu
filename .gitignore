@@ -1,0 +1,10 @@
+*~
+
+*.so
+*.pyc
+
+.ipynb_checkpoints
+build
+
+_supsmumodule.c
+_supsmu-f2pywrappers.f
